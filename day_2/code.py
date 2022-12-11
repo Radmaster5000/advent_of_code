@@ -1,7 +1,36 @@
+# moves = {'A': 'Rock', 'B': 'Paper', 'C': 'Scissors',
+#          'X': 'Rock', 'Y': 'Paper', 'Z': 'Scissors'}
+
 moves = {'A': 'Rock', 'B': 'Paper', 'C': 'Scissors',
-         'X': 'Rock', 'Y': 'Paper', 'Z': 'Scissors'}
+         'X': 'lose', 'Y': 'draw', 'Z': 'win'}
+
+def get_win(move):
+    if move == 'Rock':
+        return 'Paper'
+    elif move == 'Paper':
+        return 'Scissors'
+    else:
+        return 'Rock'
+
+def get_lose(move):
+    if move == 'Rock':
+        return 'Scissors'
+    elif move == 'Paper':
+        return 'Rock'
+    else:
+        return 'Paper'
+
+def get_result(result, player_one):
+    if result == 'win':
+        return get_win(player_one)
+    elif result == 'draw':
+        return player_one
+    else:
+        return get_lose(player_one)
+
 
 def get_score(player_one, player_two):
+    player_two = get_result(player_two, player_one)
     if (player_one == player_two):
         return 3
     else:
@@ -11,7 +40,8 @@ def get_score(player_one, player_two):
         else:
             return 0
 
-def get_move_points(move):
+def get_move_points(player_one, player_two):
+    move = get_result(player_two, player_one)
     if (move == 'Rock'):
         return 1
     elif (move == 'Paper'):
@@ -38,7 +68,7 @@ def play_game(player_one, player_two):
 
 def process_line(line):
     round_outcome = get_score(moves[line[0]], moves[line[2]])
-    move_score = get_move_points(moves[line[2]])
+    move_score = get_move_points(moves[line[0]], moves[line[2]])
     return round_outcome + move_score
 
 def main():
@@ -65,3 +95,8 @@ main()
 # 05/12/2022
 # ANSWER: 13924
 # TOTAL TIME: 46m 21s
+#
+# PART 2
+# 11/12/2022
+# ANSWER: 13448
+# TOTAL TIME: ~10m
